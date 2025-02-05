@@ -10,10 +10,10 @@ jupyter: python3
 
 # I. Analisis Data PKB
 
-## Insight
+## Business Insight
 
-- Pola pengguna kendaraan bermotor yang tidak menunda dalam pembayaran PKB
-- Kapan frekuensi kendaraan tertinggi yang terdaftar dan keluar? Dapat dilihat juga mobil mana yang paling umum, tipenya apa, dimana lokasi yang paling banyak? 
+- Tren domisili, merk, dan jenis kendaraan bermotor terhadap kewajiban membayar pajak
+- Frekuensi pengguna kendaraan bermotor yang terlambat dan on time dalam kewajiban PKB 
 
 ## Praproses Data
 
