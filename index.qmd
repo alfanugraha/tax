@@ -1,0 +1,235 @@
+---
+title: "Analisis Data PKB"
+author: "Alfa Nugraha"
+toc: true
+format: 
+    html:
+        code-fold: true
+jupyter: python3
+---
+
+# I. Analisis Data PKB
+
+## Insight
+
+- Mana pengguna kendaraan yang paling sering telat membayar
+- Kapan frekuensi kendaraan tertinggi yang terdaftar dan keluar? Dapat dilihat juga mobil mana yang paling umum, tipenya apa, dimana lokasi yang paling banyak? 
+
+## Praproses Data
+
+### 1. Pustaka and fungsi diimpor
+
+Tahap awal praproses data adalah dengan memuat pustaka python yang dibutuhkan dan membuat *user-defined function* sebagai alat untuk inspeksi awal data.
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings as wr
+wr.filterwarnings('ignore')
+
+from sklearn import tree
+from sklearn.tree import DecisionTreeClassifier
+
+def show_data(df, row=5):
+    print(f'ukuran data: {df.shape}')
+    display(df.head(row))
+
+def get_missing_data_summary(df):
+    temp = df.isnull().sum().reset_index()
+    temp.columns = ['col_name', 'num_missing']
+    temp['col_type'] = df.dtypes.values
+    temp = temp.sort_values(by = 'num_missing', ascending = False)
+    temp['num_missing_percent'] = round(temp['num_missing'] / len(df) * 100, 2)
+    return(temp)
+```
+
+### 2. Data dimuat
+
+```{python}
+df_payment = pd.read_csv("dataset/pembayaran.csv")
+show_data(df_payment)
+```
+
+```{python}
+# mengubah tipe kolom tanggal bayar
+df_payment['Tgl Bayar'] = pd.to_datetime(df_payment['Tgl Bayar'])
+```
+
+```{python}
+df_payment.nunique()
+```
+
+Data `pembayaran.csv` berisi 3869 data transaksi pembayaran pajak kendaraan bermotor dengan 4 atribut atau variabel sebagai berikut:
+1. `Nopol`: Nomor plat kendaraan bermotor
+2. `Tgl Bayar`: Tanggal pembayaran pajak kendaraan terkait
+3. `Bayar`: Nominal pembayaran berdasarkan PKB Pokok
+4. `Denda`: Nominal denda keterlambatan pembayaran PKB
+
+Dari seluruh amatan tersebut terdapat sejumlah `950` **kendaraan bermotor unik** yang telah melakukan transaksi.
+
+```{python}
+df_profil_op = pd.read_csv("dataset/profil_op.csv")
+show_data(df_profil_op)
+```
+
+```{python}
+# mengubah tipe kolom tanggal daftar dan keluar
+df_profil_op['Tgl Daftar'] = pd.to_datetime(df_profil_op['Tgl Daftar'])
+df_profil_op['Tgl Keluar'] = pd.to_datetime(df_profil_op['Tgl Keluar'])
+```
+
+```{python}
+df_profil_op.nunique()
+```
+
+Data `profil_op.csv` berisi 1000 amatan profil kendaraan bermotor dengan 9 atribut atau variabel sebagai berikut:
+1. `Nopol`: Nomor plat kendaraan bermotor
+2. `Domisili`: Tanggal pembayaran pajak kendaraan terkait
+3. `Tgl Daftar`: Tanggal kendaraan pertama kali terdaftar dalam sistem administrasi kendaraan bermotor 
+4. `Tgl Keluar`: Tanggal kendaraan dihapus dari sistem
+5. `Jenis Kendaraan`: Jenis kendaraan Mobil atau Motor
+6. `Merk Kendaraan`: Merk kendaraan bermotor
+7. `Tipe Kendaraan`: Tipe kendaraan SUV atau Sport
+8. `Jenis Bahan Bakar`: Jenis bahan bakar kendaraan
+9. `PKB Pokok`: Nominal pajak kendaraan pokok
+
+### 3. Data dibersihkan
+
+Pada kedua data tersebut dapat diidentifikasi atribut unik yang dapat digunakan untuk penggabungan data. Namun sebelum dan sesudah hal tersebut dilakukan perlu adanya:
+- pemeriksaan ketepatan tanggal kendaraan terdaftar dan keluar 
+- pemeriksaan duplikasi data, terutama pada `Nopol` dan `PKB Pokok` yang akan dijadikan *key* untuk join data.
+- pemeriksaan kategori pada atribut `Jenis Bahan Bakar`
+- pemeriksaan ketepatan tanggal kendaraan terdaftar dan tanggal pembayaran pajak
+
+```{python}
+df_profil_filtered = df_profil_op[df_profil_op['Tgl Daftar'] <= df_profil_op['Tgl Keluar']]
+show_data(df_profil_filtered)
+```
+
+```{python}
+nopol = df_profil_filtered['Nopol']
+duplicate_nopol = pd.Series(nopol)[pd.Series(nopol).duplicated()].values
+duplicate_nopol
+```
+
+```{python}
+print(f'Terdapat {len(duplicate_nopol)} duplikasi pada nopol')
+```
+
+```{python}
+df_profil_filtered.groupby(['Jenis Bahan Bakar', 'Jenis Kendaraan']).size().unstack(fill_value=0)
+```
+
+Terdapat beberapa kategori `Jenis Bahan Bakar` yang tidak teridentifikasi pada dataset dan semuanya masuk ke dalam kategori `Jenis Kendaraan` = `Mobil`, hanya kategori `Motor` yang dengan jelas menggunakan bahan bakar `Bensin`. Pada aspek ini tidak menjadi isu karena lebih mudah membedakannya dengan melihat jenis kendaraannya saja. 
+
+```{python}
+missing_df_payment = get_missing_data_summary(df_payment)
+missing_df_payment
+```
+
+```{python}
+missing_df_profil = get_missing_data_summary(df_profil_filtered)
+missing_df_profil
+```
+
+Tabel ringkasan di atas menunjukkan bahwa tidak ada langkah lebih lanjut yang perlu dilakukan, karena kedua tabel tidak memiliki nilai yang hilang pada setiap atributnya. 
+
+### 4. Data digabungkan
+
+```{python}
+df_merged = df_profil_filtered.merge(df_payment, left_on = ["Nopol", "PKB Pokok"], right_on = ["Nopol", "Bayar"], how = "left")
+show_data(df_merged)
+```
+
+```{python}
+df_final = df_merged[df_merged['Tgl Daftar'] <= df_merged['Tgl Bayar']]
+show_data(df_final)
+```
+
+### 5. Rekayasa fitur
+
+Tahapan berikut ini dilakukan rekayasa fitur terhadap ketepatan pembayaran PKB dengan atribut `Status Denda` = `[Ontime, Denda]`
+
+```{python}
+df_final['Status Denda'] = np.where(df_final['Denda'] == 0, "Ontime", "Denda")
+show_data(df_final)
+```
+
+## Exploratory Data Analysis
+
+
+### Analisis Univariate
+
+```{python}
+domisili_counts = df_final['Domisili'].value_counts()
+plt.figure(figsize=(8, 6))
+plt.bar(domisili_counts.index, domisili_counts)
+plt.title('Domisili Pembayar PKB')
+plt.xlabel('Kota')
+plt.ylabel('Total')
+```
+
+```{python}
+merk_counts = df_final['Merk Kendaraan'].value_counts()
+plt.figure(figsize=(8, 6))
+plt.bar(merk_counts.index, merk_counts)
+plt.title('Merk Kendaraan Pembayar PKB')
+plt.xlabel('Merk Kendaraan')
+plt.ylabel('Total')
+```
+
+```{python}
+jenis_counts = df_final['Jenis Kendaraan'].value_counts()
+plt.figure(figsize=(8, 6))
+plt.bar(jenis_counts.index, jenis_counts)
+plt.title('Jenis Kendaraan Pembayar PKB')
+plt.xlabel('Jenis Kendaraan')
+plt.ylabel('Total')
+```
+
+
+### Analisis Bivariate
+
+```{python}
+pd.crosstab(df_final['Status Denda'], df_final['Domisili'], margins = True)
+```
+
+```{python}
+pd.crosstab(df_final['Status Denda'], df_final['Merk Kendaraan'], margins = True)
+```
+
+```{python}
+pd.crosstab(df_final['Status Denda'], df_final['Jenis Kendaraan'], margins = True)
+```
+
+# II. Penggunaan AI / Machine Learning
+
+Penerapan Machine Learning pada data di atas dapat menjadi nilai tambah untuk melihat bagaimana tren pelaku pembayaran pajak pada umumnya. Teknik Machine Learning yang digunakan pada kasus ini juga bervariasi, contoh sederhana yang dapat digunakan adalah Pohon Keputusan. Berikut langkah yang harus dipersiapkan:  
+
+```{python}
+df_ml = df_final
+
+features = ['Domisili', 'Jenis Kendaraan']
+
+d1 = {'Bandung': 0, 'Bogor': 1, 'Jakarta': 2, 'Medan': 3, 'Surabaya': 4}
+d2 = {'Daihatsu': 0, 'Ford': 1, 'Honda': 2, 'Kawasaki': 3, 'Mitsubishi': 4, 'Suzuki': 5, 'Toyota': 6, 'Yamaha': 7}
+d3 = {'Mobil': 0, 'Motor': 1}
+d4 = {'Denda': 0, 'Ontime': 1}
+
+df_ml['Jenis Kendaraan'] = df_ml['Jenis Kendaraan'].map(d3)
+df_ml['Merk Kendaraan'] = df_ml['Merk Kendaraan'].map(d2)
+df_ml['Domisili'] = df_ml['Domisili'].map(d1)
+df_ml['Status Denda'] = df_ml['Status Denda'].map(d4)
+
+X = df_ml[features]
+y = df_ml['Status Denda']
+
+dtree = DecisionTreeClassifier()
+dtree = dtree.fit(X, y)
+
+tree.plot_tree(dtree, feature_names = features)
+```
+
+Pada hasil simulasi di atas terlihat bahwa akar atau titik awal pohon keputusan adalah `Domisili` dimana atribut ini dapat disimpulkan sebagai atribut yang paling signifikan dalam mempartisi data. Kemudian pada setiap simpul (`Node`), `Domisili` dan `Jenis Kendaraan` juga mendominasi dalam pembagian cabang dalam menentukan bagaimana kedisiplinan pemilik kendaraan bermotor dalam membayar pajak dalam hal ini `Ontime` dan terlambat (`Denda`).
