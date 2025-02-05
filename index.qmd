@@ -12,7 +12,7 @@ jupyter: python3
 
 ## Insight
 
-- Mana pengguna kendaraan yang paling sering telat membayar
+- Pola pengguna kendaraan bermotor yang tidak menunda dalam pembayaran PKB
 - Kapan frekuensi kendaraan tertinggi yang terdaftar dan keluar? Dapat dilihat juga mobil mana yang paling umum, tipenya apa, dimana lokasi yang paling banyak? 
 
 ## Praproses Data
@@ -153,10 +153,13 @@ show_data(df_final)
 
 ### 5. Rekayasa fitur
 
-Tahapan berikut ini dilakukan rekayasa fitur terhadap ketepatan pembayaran PKB dengan atribut `Status Denda` = `[Ontime, Denda]`
+Tahapan berikut ini dilakukan rekayasa fitur terhadap ketepatan pembayaran PKB dengan atribut `Status Denda` = `[Ontime, Denda]` beserta `Durasi Keterlambatan`.
 
 ```{python}
 df_final['Status Denda'] = np.where(df_final['Denda'] == 0, "Ontime", "Denda")
+df_final['Durasi Keterlambatan'] = np.where(df_final['Denda'] == 0, 
+                                            df_final['Tgl Daftar'] - df_final['Tgl Daftar'], 
+                                            df_final['Tgl Bayar'] - df_final['Tgl Daftar'])
 show_data(df_final)
 ```
 
