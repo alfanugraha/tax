@@ -104,7 +104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul>
 </nav>
 </div>
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="i.-analisis-data-pkb" class="level1">
+<section id="i.-analisis-data-pkb" class="level1 page-columns page-full">
 <h1>I. Analisis Data PKB</h1>
 <section id="business-insight" class="level2">
 <h2 class="anchored" data-anchor-id="business-insight">Business Insight</h2>
@@ -145,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pustaka-and-fungsi-diimpor" class="level3">
 <h3 class="anchored" data-anchor-id="pustaka-and-fungsi-diimpor">1. Pustaka and fungsi diimpor</h3>
 <p>Tahap awal praproses data adalah dengan memuat pustaka python yang dibutuhkan dan membuat <em>user-defined function</em> sebagai alat untuk inspeksi awal data.</p>
-<div id="9726a211" class="cell" data-execution_count="1">
+<div id="698947dd" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-dimuat" class="level3">
 <h3 class="anchored" data-anchor-id="data-dimuat">2. Data dimuat</h3>
-<div id="cfcf545b" class="cell" data-execution_count="2">
+<div id="a3a1d90d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_payment <span class="op">=</span> pd.read_csv(<span class="st">"dataset/pembayaran.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>show_data(df_payment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -233,13 +233,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="a6c14ddc" class="cell" data-execution_count="3">
+<div id="1146484b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mengubah tipe kolom tanggal bayar</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_payment[<span class="st">'Tgl Bayar'</span>] <span class="op">=</span> pd.to_datetime(df_payment[<span class="st">'Tgl Bayar'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9b9a9172" class="cell" data-execution_count="4">
+<div id="ef0a119e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_payment.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="391">
 <pre><code>Nopol         950
 Tgl Bayar    2150
 Bayar         999
@@ -255,7 +255,7 @@ dtype: int64</code></pre>
 <li><code>Denda</code>: Nominal denda keterlambatan pembayaran PKB</li>
 </ol>
 <p>Dari seluruh amatan tersebut terdapat sejumlah <code>950</code> <strong>kendaraan bermotor unik</strong> yang telah melakukan transaksi.</p>
-<div id="13246cf8" class="cell" data-execution_count="5">
+<div id="029e9a8a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_profil_op <span class="op">=</span> pd.read_csv(<span class="st">"dataset/profil_op.csv"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>show_data(df_profil_op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -347,14 +347,14 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="ac6c14be" class="cell" data-execution_count="6">
+<div id="61d51fa9" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mengubah tipe kolom tanggal daftar dan keluar</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_profil_op[<span class="st">'Tgl Daftar'</span>] <span class="op">=</span> pd.to_datetime(df_profil_op[<span class="st">'Tgl Daftar'</span>])</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_profil_op[<span class="st">'Tgl Keluar'</span>] <span class="op">=</span> pd.to_datetime(df_profil_op[<span class="st">'Tgl Keluar'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b77722a7" class="cell" data-execution_count="7">
+<div id="860d08b1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_profil_op.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="394">
 <pre><code>Nopol                950
 Domisili               5
 Tgl Daftar           840
@@ -389,7 +389,7 @@ dtype: int64</code></pre>
 <li>pemeriksaan kategori pada atribut <code>Jenis Bahan Bakar</code></li>
 <li>pemeriksaan ketepatan tanggal kendaraan terdaftar dan tanggal pembayaran pajak</li>
 </ul>
-<div id="46af7ace" class="cell" data-execution_count="8">
+<div id="0dc68cb7" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_profil_filtered <span class="op">=</span> df_profil_op[df_profil_op[<span class="st">'Tgl Daftar'</span>] <span class="op">&lt;=</span> df_profil_op[<span class="st">'Tgl Keluar'</span>]]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>show_data(df_profil_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -481,11 +481,11 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="ef0436ba" class="cell" data-execution_count="9">
+<div id="504fed9e" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nopol <span class="op">=</span> df_profil_filtered[<span class="st">'Nopol'</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>duplicate_nopol <span class="op">=</span> pd.Series(nopol)[pd.Series(nopol).duplicated()].values</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>duplicate_nopol</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div class="cell-output cell-output-display" data-execution_count="396">
 <pre><code>array(['B7049XYZ', 'B5008XYZ', 'B6595XYZ', 'B6508XYZ', 'B4658XYZ',
        'B5948XYZ', 'B7329XYZ', 'B9269XYZ', 'B7012XYZ', 'B6689XYZ',
        'B4275XYZ', 'B5366XYZ', 'B1611XYZ', 'B3558XYZ', 'B2042XYZ',
@@ -497,15 +497,15 @@ dtype: int64</code></pre>
        'B7086XYZ', 'B9547XYZ', 'B8417XYZ', 'B2393XYZ'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="be6657ce" class="cell" data-execution_count="10">
+<div id="a4a033f7" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Terdapat </span><span class="sc">{</span><span class="bu">len</span>(duplicate_nopol)<span class="sc">}</span><span class="ss"> duplikasi pada nopol'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Terdapat 44 duplikasi pada nopol</code></pre>
 </div>
 </div>
-<div id="c7d9811e" class="cell" data-execution_count="11">
+<div id="8577d134" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_profil_filtered.groupby([<span class="st">'Jenis Bahan Bakar'</span>, <span class="st">'Jenis Kendaraan'</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="398">
 <div>
 
 
@@ -560,10 +560,10 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>Terdapat beberapa kategori <code>Jenis Bahan Bakar</code> yang tidak teridentifikasi pada dataset dan semuanya masuk ke dalam kategori <code>Jenis Kendaraan</code> = <code>Mobil</code>, hanya kategori <code>Motor</code> yang dengan jelas menggunakan bahan bakar <code>Bensin</code>. Pada aspek ini tidak menjadi isu karena lebih mudah membedakannya dengan melihat jenis kendaraannya saja.</p>
-<div id="8c74d97f" class="cell" data-execution_count="12">
+<div id="09ae2474" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>missing_df_payment <span class="op">=</span> get_missing_data_summary(df_payment)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>missing_df_payment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="399">
 <div>
 
 
@@ -612,10 +612,10 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="9a97feeb" class="cell" data-execution_count="13">
+<div id="54ac029a" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>missing_df_profil <span class="op">=</span> get_missing_data_summary(df_profil_filtered)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>missing_df_profil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="400">
 <div>
 
 
@@ -703,7 +703,7 @@ dtype: int64</code></pre>
 </section>
 <section id="data-digabungkan" class="level3">
 <h3 class="anchored" data-anchor-id="data-digabungkan">4. Data digabungkan</h3>
-<div id="b338225c" class="cell" data-execution_count="14">
+<div id="4d61f132" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> df_profil_filtered.merge(df_payment, left_on <span class="op">=</span> [<span class="st">"Nopol"</span>, <span class="st">"PKB Pokok"</span>], right_on <span class="op">=</span> [<span class="st">"Nopol"</span>, <span class="st">"Bayar"</span>], how <span class="op">=</span> <span class="st">"left"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>show_data(df_merged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -813,7 +813,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="979139dd" class="cell" data-execution_count="15">
+<div id="cf3d9793" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_final <span class="op">=</span> df_merged[df_merged[<span class="st">'Tgl Daftar'</span>] <span class="op">&lt;=</span> df_merged[<span class="st">'Tgl Bayar'</span>]]</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>show_data(df_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -927,7 +927,7 @@ dtype: int64</code></pre>
 <section id="rekayasa-fitur" class="level3">
 <h3 class="anchored" data-anchor-id="rekayasa-fitur">5. Rekayasa fitur</h3>
 <p>Tahapan berikut ini dilakukan rekayasa fitur terhadap ketepatan pembayaran PKB dengan atribut <code>Status Denda</code> = <code>[Ontime, Denda]</code> beserta <code>Durasi Keterlambatan</code>.</p>
-<div id="0f937dbf" class="cell" data-execution_count="16">
+<div id="dddb67a3" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_final[<span class="st">'Status Denda'</span>] <span class="op">=</span> np.where(df_final[<span class="st">'Denda'</span>] <span class="op">==</span> <span class="dv">0</span>, <span class="st">"Ontime"</span>, <span class="st">"Denda"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_final[<span class="st">'Durasi Keterlambatan'</span>] <span class="op">=</span> np.where(df_final[<span class="st">'Denda'</span>] <span class="op">==</span> <span class="dv">0</span>, </span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                            df_final[<span class="st">'Tgl Daftar'</span>] <span class="op">-</span> df_final[<span class="st">'Tgl Daftar'</span>], </span>
@@ -1054,70 +1054,52 @@ dtype: int64</code></pre>
 </div>
 </section>
 </section>
-<section id="exploratory-data-analysis" class="level2">
+<section id="exploratory-data-analysis" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h2>
-<section id="analisis-univariate" class="level3">
+<section id="analisis-univariate" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="analisis-univariate">Analisis Univariate</h3>
-<div id="0d0f71ba" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>domisili_counts <span class="op">=</span> df_final[<span class="st">'Domisili'</span>].value_counts()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.bar(domisili_counts.index, domisili_counts)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Domisili Pembayar PKB'</span>)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Kota'</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>merk_counts <span class="op">=</span> df_final[<span class="st">'Merk Kendaraan'</span>].value_counts()</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plt.bar(merk_counts.index, merk_counts)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Merk Kendaraan Pembayar PKB'</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Merk Kendaraan'</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>jenis_counts <span class="op">=</span> df_final[<span class="st">'Jenis Kendaraan'</span>].value_counts()</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>plt.bar(jenis_counts.index, jenis_counts)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Jenis Kendaraan Pembayar PKB'</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Jenis Kendaraan'</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b5170446" class="cell column-screen-inset-shaded quarto-layout-panel" data-execution_count="17" data-layout-nrow="1">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: flex-start;">
 <pre><code>Text(0, 0.5, 'Total')</code></pre>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-18-output-2.png" width="667" height="523" class="figure-img"></p>
-</figure>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-18-output-2.png" class="img-fluid" width="667"></p>
 </div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-18-output-3.png" class="img-fluid" width="667"></p>
 </div>
-</div>
-<div id="a4409b99" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>merk_counts <span class="op">=</span> df_final[<span class="st">'Merk Kendaraan'</span>].value_counts()</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>plt.bar(merk_counts.index, merk_counts)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Merk Kendaraan Pembayar PKB'</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Merk Kendaraan'</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
-<pre><code>Text(0, 0.5, 'Total')</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-19-output-2.png" width="667" height="523" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="333cb7ed" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>jenis_counts <span class="op">=</span> df_final[<span class="st">'Jenis Kendaraan'</span>].value_counts()</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.bar(jenis_counts.index, jenis_counts)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Jenis Kendaraan Pembayar PKB'</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Jenis Kendaraan'</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Total'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>Text(0, 0.5, 'Total')</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-20-output-2.png" width="676" height="523" class="figure-img"></p>
-</figure>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-18-output-4.png" class="img-fluid" width="676"></p>
 </div>
 </div>
 </div>
 </section>
 <section id="analisis-bivariate" class="level3">
 <h3 class="anchored" data-anchor-id="analisis-bivariate">Analisis Bivariate</h3>
-<div id="4b8f5279" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Domisili'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div id="741bbc92" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Domisili'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="405">
 <div>
 
 
@@ -1176,9 +1158,9 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="c4f6e11b" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Merk Kendaraan'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div id="eb7365d0" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Merk Kendaraan'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="406">
 <div>
 
 
@@ -1252,9 +1234,9 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="73ac6b8c" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Jenis Kendaraan'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div id="f392349d" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pd.crosstab(df_final[<span class="st">'Status Denda'</span>], df_final[<span class="st">'Jenis Kendaraan'</span>], margins <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="407">
 <div>
 
 
@@ -1301,32 +1283,45 @@ dtype: int64</code></pre>
 </section>
 </section>
 </section>
-<section id="ii.-penggunaan-ai-machine-learning" class="level1">
+<section id="ii.-penggunaan-ai-machine-learning" class="level1 page-columns page-full">
 <h1>II. Penggunaan AI / Machine Learning</h1>
 <p>Penerapan Machine Learning pada data di atas dapat menjadi nilai tambah untuk melihat bagaimana tren pelaku pembayaran pajak pada umumnya. Teknik Machine Learning yang digunakan pada kasus ini juga bervariasi, contoh sederhana yang dapat digunakan adalah Pohon Keputusan. Berikut langkah yang harus dipersiapkan:</p>
-<div id="a0119c91" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_ml <span class="op">=</span> df_final</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'Domisili'</span>, <span class="st">'Jenis Kendaraan'</span>]</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>d1 <span class="op">=</span> {<span class="st">'Bandung'</span>: <span class="dv">0</span>, <span class="st">'Bogor'</span>: <span class="dv">1</span>, <span class="st">'Jakarta'</span>: <span class="dv">2</span>, <span class="st">'Medan'</span>: <span class="dv">3</span>, <span class="st">'Surabaya'</span>: <span class="dv">4</span>}</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>d2 <span class="op">=</span> {<span class="st">'Daihatsu'</span>: <span class="dv">0</span>, <span class="st">'Ford'</span>: <span class="dv">1</span>, <span class="st">'Honda'</span>: <span class="dv">2</span>, <span class="st">'Kawasaki'</span>: <span class="dv">3</span>, <span class="st">'Mitsubishi'</span>: <span class="dv">4</span>, <span class="st">'Suzuki'</span>: <span class="dv">5</span>, <span class="st">'Toyota'</span>: <span class="dv">6</span>, <span class="st">'Yamaha'</span>: <span class="dv">7</span>}</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>d3 <span class="op">=</span> {<span class="st">'Mobil'</span>: <span class="dv">0</span>, <span class="st">'Motor'</span>: <span class="dv">1</span>}</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>d4 <span class="op">=</span> {<span class="st">'Denda'</span>: <span class="dv">0</span>, <span class="st">'Ontime'</span>: <span class="dv">1</span>}</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Jenis Kendaraan'</span>] <span class="op">=</span> df_ml[<span class="st">'Jenis Kendaraan'</span>].<span class="bu">map</span>(d3)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Merk Kendaraan'</span>] <span class="op">=</span> df_ml[<span class="st">'Merk Kendaraan'</span>].<span class="bu">map</span>(d2)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Domisili'</span>] <span class="op">=</span> df_ml[<span class="st">'Domisili'</span>].<span class="bu">map</span>(d1)</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Status Denda'</span>] <span class="op">=</span> df_ml[<span class="st">'Status Denda'</span>].<span class="bu">map</span>(d4)</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_ml[features]</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_ml[<span class="st">'Status Denda'</span>]</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>dtree <span class="op">=</span> DecisionTreeClassifier()</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>dtree <span class="op">=</span> dtree.fit(X, y)</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>tree.plot_tree(dtree, feature_names <span class="op">=</span> features)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div id="b36eb376" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_ml <span class="op">=</span> df_final</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [<span class="st">'Domisili'</span>, <span class="st">'Jenis Kendaraan'</span>]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>d1 <span class="op">=</span> {<span class="st">'Bandung'</span>: <span class="dv">0</span>, <span class="st">'Bogor'</span>: <span class="dv">1</span>, <span class="st">'Jakarta'</span>: <span class="dv">2</span>, <span class="st">'Medan'</span>: <span class="dv">3</span>, <span class="st">'Surabaya'</span>: <span class="dv">4</span>}</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>d2 <span class="op">=</span> {<span class="st">'Daihatsu'</span>: <span class="dv">0</span>, <span class="st">'Ford'</span>: <span class="dv">1</span>, <span class="st">'Honda'</span>: <span class="dv">2</span>, <span class="st">'Kawasaki'</span>: <span class="dv">3</span>, <span class="st">'Mitsubishi'</span>: <span class="dv">4</span>, <span class="st">'Suzuki'</span>: <span class="dv">5</span>, <span class="st">'Toyota'</span>: <span class="dv">6</span>, <span class="st">'Yamaha'</span>: <span class="dv">7</span>}</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>d3 <span class="op">=</span> {<span class="st">'Mobil'</span>: <span class="dv">0</span>, <span class="st">'Motor'</span>: <span class="dv">1</span>}</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>d4 <span class="op">=</span> {<span class="st">'Denda'</span>: <span class="dv">0</span>, <span class="st">'Ontime'</span>: <span class="dv">1</span>}</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Jenis Kendaraan'</span>] <span class="op">=</span> df_ml[<span class="st">'Jenis Kendaraan'</span>].<span class="bu">map</span>(d3)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Merk Kendaraan'</span>] <span class="op">=</span> df_ml[<span class="st">'Merk Kendaraan'</span>].<span class="bu">map</span>(d2)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Domisili'</span>] <span class="op">=</span> df_ml[<span class="st">'Domisili'</span>].<span class="bu">map</span>(d1)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>df_ml[<span class="st">'Status Denda'</span>] <span class="op">=</span> df_ml[<span class="st">'Status Denda'</span>].<span class="bu">map</span>(d4)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_ml[features]</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_ml[<span class="st">'Status Denda'</span>]</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>dtree <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>dtree <span class="op">=</span> dtree.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Langkah kodifikasi di atas bertujuan untuk memudahkan proses eksekusi algoritma decision tree, terutama kodifikasi <code>Status Denda</code> dengan nilai <code>1</code> atau <code>True</code>.</p>
+<div id="a39c363f" class="cell page-columns page-full" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> tree.plot_tree(dtree, feature_names <span class="op">=</span> features)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display page-columns page-full">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="index_files/figure-html/cell-23-output-1.png" width="540" height="389" class="figure-img column-page-right"></p>
+<figcaption>Pohon Keputusan (Klik kanan lalu buka gambar pada tab baru untuk gambar yang lebih jelas)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="da1a8779" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>res </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="410">
 <pre><code>[Text(0.4342105263157895, 0.9, 'Domisili &lt;= 1.5\ngini = 0.491\nsamples = 3350\nvalue = [1445.0, 1905.0]'),
  Text(0.21052631578947367, 0.7, 'Jenis Kendaraan &lt;= 0.5\ngini = 0.488\nsamples = 1326\nvalue = [562.0, 764.0]'),
  Text(0.3223684210526316, 0.8, 'True  '),
@@ -1349,15 +1344,8 @@ dtype: int64</code></pre>
  Text(0.8421052631578947, 0.1, 'gini = 0.49\nsamples = 348\nvalue = [150, 198]'),
  Text(0.9473684210526315, 0.1, 'gini = 0.492\nsamples = 388\nvalue = [170, 218]')]</code></pre>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/cell-24-output-2.png" width="540" height="389" class="figure-img"></p>
-</figure>
 </div>
-</div>
-</div>
-<p>Pada hasil simulasi di atas terlihat bahwa akar atau titik awal pohon keputusan adalah <code>Domisili</code> dimana atribut ini dapat disimpulkan sebagai atribut yang paling signifikan dalam mempartisi data. Kemudian pada setiap simpul (<code>Node</code>), <code>Domisili</code> dan <code>Jenis Kendaraan</code> juga mendominasi dalam pembagian cabang dalam menentukan bagaimana kedisiplinan pemilik kendaraan bermotor dalam membayar pajak dalam hal ini <code>Ontime</code> dan terlambat (<code>Denda</code>).</p>
+<p>Pada hasil simulasi di atas terlihat bahwa akar atau titik awal pohon keputusan adalah <code>Domisili</code> dimana atribut ini dapat disimpulkan sebagai atribut yang paling signifikan dalam mempartisi data. Kemudian pada setiap simpul (<code>Node</code>), <code>Domisili</code> dan <code>Jenis Kendaraan</code> juga mendominasi dalam pembagian cabang dalam menentukan bagaimana kedisiplinan pemilik kendaraan bermotor dalam membayar pajak dalam hal ini <code>Ontime</code> atau <code>1</code> atau <code>True</code> dan begitu pula sebaliknya untuk terlambat (<code>Denda</code>).</p>
 </section>
 
 </main>

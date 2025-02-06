@@ -169,24 +169,23 @@ show_data(df_final)
 ### Analisis Univariate
 
 ```{python}
+#| column: screen-inset-shaded
+#| layout-nrow: 1
+
 domisili_counts = df_final['Domisili'].value_counts()
 plt.figure(figsize=(8, 6))
 plt.bar(domisili_counts.index, domisili_counts)
 plt.title('Domisili Pembayar PKB')
 plt.xlabel('Kota')
 plt.ylabel('Total')
-```
 
-```{python}
 merk_counts = df_final['Merk Kendaraan'].value_counts()
 plt.figure(figsize=(8, 6))
 plt.bar(merk_counts.index, merk_counts)
 plt.title('Merk Kendaraan Pembayar PKB')
 plt.xlabel('Merk Kendaraan')
 plt.ylabel('Total')
-```
 
-```{python}
 jenis_counts = df_final['Jenis Kendaraan'].value_counts()
 plt.figure(figsize=(8, 6))
 plt.bar(jenis_counts.index, jenis_counts)
@@ -234,8 +233,18 @@ y = df_ml['Status Denda']
 
 dtree = DecisionTreeClassifier()
 dtree = dtree.fit(X, y)
-
-tree.plot_tree(dtree, feature_names = features)
 ```
 
-Pada hasil simulasi di atas terlihat bahwa akar atau titik awal pohon keputusan adalah `Domisili` dimana atribut ini dapat disimpulkan sebagai atribut yang paling signifikan dalam mempartisi data. Kemudian pada setiap simpul (`Node`), `Domisili` dan `Jenis Kendaraan` juga mendominasi dalam pembagian cabang dalam menentukan bagaimana kedisiplinan pemilik kendaraan bermotor dalam membayar pajak dalam hal ini `Ontime` dan terlambat (`Denda`).
+Langkah kodifikasi di atas bertujuan untuk memudahkan proses eksekusi algoritma decision tree, terutama kodifikasi `Status Denda` dengan nilai `1` atau `True`.
+
+```{python}
+#| column: page-right
+#| fig-cap: "Pohon Keputusan (Klik kanan lalu buka gambar pada tab baru untuk gambar yang lebih jelas)"
+res = tree.plot_tree(dtree, feature_names = features)
+```
+
+```{python}
+res 
+```
+
+Pada hasil simulasi di atas terlihat bahwa akar atau titik awal pohon keputusan adalah `Domisili` dimana atribut ini dapat disimpulkan sebagai atribut yang paling signifikan dalam mempartisi data. Kemudian pada setiap simpul (`Node`), `Domisili` dan `Jenis Kendaraan` juga mendominasi dalam pembagian cabang dalam menentukan bagaimana kedisiplinan pemilik kendaraan bermotor dalam membayar pajak dalam hal ini `Ontime` atau `1` atau `True` dan begitu pula sebaliknya untuk terlambat (`Denda`).
