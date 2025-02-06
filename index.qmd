@@ -160,6 +160,8 @@ df_final['Status Denda'] = np.where(df_final['Denda'] == 0, "Ontime", "Denda")
 df_final['Durasi Keterlambatan'] = np.where(df_final['Denda'] == 0, 
                                             df_final['Tgl Daftar'] - df_final['Tgl Daftar'], 
                                             df_final['Tgl Bayar'] - df_final['Tgl Daftar'])
+df_final['Level PKB'] = np.where(df_final['PKB Pokok'] < 999999, "Rendah", 
+                                 np.where(df_final['PKB Pokok'] < 1499999, "Sedang", "Tinggi"))
 show_data(df_final)
 ```
 
@@ -207,6 +209,17 @@ pd.crosstab(df_final['Status Denda'], df_final['Merk Kendaraan'], margins = True
 
 ```{python}
 pd.crosstab(df_final['Status Denda'], df_final['Jenis Kendaraan'], margins = True)
+```
+
+### Analisis Multivariate
+
+```{python}
+n = df_final[['Nopol', 'Domisili','Level PKB','Status Denda']].groupby(by=['Domisili','Level PKB','Status Denda']).count().unstack(level=1)
+n
+```
+
+```{python}
+sns.heatmap(n)
 ```
 
 # II. Penggunaan AI / Machine Learning
