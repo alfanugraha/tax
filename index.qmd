@@ -29,6 +29,8 @@ import seaborn as sns
 import warnings as wr
 wr.filterwarnings('ignore')
 
+from datetime import datetime
+
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 
@@ -107,18 +109,9 @@ Pada kedua data tersebut dapat diidentifikasi atribut unik yang dapat digunakan 
 - pemeriksaan ketepatan tanggal kendaraan terdaftar dan tanggal pembayaran pajak
 
 ```{python}
+# filter tanggal keluar yang lebih kecil dari tanggal daftar
 df_profil_filtered = df_profil_op[df_profil_op['Tgl Daftar'] <= df_profil_op['Tgl Keluar']]
 show_data(df_profil_filtered)
-```
-
-```{python}
-nopol = df_profil_filtered['Nopol']
-duplicate_nopol = pd.Series(nopol)[pd.Series(nopol).duplicated()].values
-duplicate_nopol
-```
-
-```{python}
-print(f'Terdapat {len(duplicate_nopol)} duplikasi pada nopol')
 ```
 
 ```{python}
@@ -147,26 +140,66 @@ show_data(df_merged)
 ```
 
 ```{python}
-df_final = df_merged[df_merged['Tgl Daftar'] <= df_merged['Tgl Bayar']]
-show_data(df_final)
+# filter tanggal bayar yang lebih kecil dari tanggal daftar
+df_merge_filter = df_merged[df_merged['Tgl Daftar'] <= df_merged['Tgl Bayar']]
+show_data(df_merge_filter)
 ```
 
-### 5. Rekayasa fitur
-
-Tahapan berikut ini dilakukan rekayasa fitur terhadap ketepatan pembayaran PKB dengan atribut `Status Denda` = `[Ontime, Denda]` beserta `Durasi Keterlambatan`.
+```{python}
+nopol = df_merge_filter['Nopol']
+duplicate_nopol = pd.Series(nopol)[pd.Series(nopol).duplicated()].values
+duplicate_nopol
+```
 
 ```{python}
+print(f'Terdapat {len(duplicate_nopol)} duplikasi pada nopol')
+```
+
+Perlu dilakukan pemeriksaan kembali untuk memastikan tidak ada duplikasi pembayaran yang tidak masuk akal.
+
+### 5. Data diperiksa kembali dengan rekayasa fitur
+
+Tahap pemeriksaan data kali ini dilakukan dengan merekayasa fitur dimana terdapat penambahan atribut `Status Denda` = `[Ontime, Denda]`, `Level PKB` = `[Rendah, Sedang, Tinggi]`, `Umur Operasional`, `Durasi Keterlambatan`.
+
+```{python}
+df_final = df_merge_filter
+# filter tanggal keluar yang lebih kecil dari tanggal bayar
+df_final = df_final[df_final['Tgl Bayar'] <= df_final['Tgl Keluar']]
 df_final['Status Denda'] = np.where(df_final['Denda'] == 0, "Ontime", "Denda")
 df_final['Durasi Keterlambatan'] = np.where(df_final['Denda'] == 0, 
                                             df_final['Tgl Daftar'] - df_final['Tgl Daftar'], 
                                             df_final['Tgl Bayar'] - df_final['Tgl Daftar'])
 df_final['Level PKB'] = np.where(df_final['PKB Pokok'] < 999999, "Rendah", 
                                  np.where(df_final['PKB Pokok'] < 1499999, "Sedang", "Tinggi"))
-show_data(df_final)
+df_final['Umur Operasional'] = df_final['Tgl Bayar'].dt.year - df_final['Tgl Daftar'].dt.year
+show_data(df_final, 6)
+```
+
+Penyaringan data seharusnya dapat dilakukan pada anomali dimana:
+
+1. Tanggal pembayaran yang sesuai pada waktunya tetapi dikenakan denda tanpa ada keterangan yang cukup jelas
+2. Tanggal pembayaran jatuh tempo tetapi tidak dikenakan sanksi denda
+
+Besaran denda pada data juga seragam lalu tidak ada arahan lebih lanjut apakah data dapat dimodifikasi berdasarkan perhitungan besaran denda PKB **UU No. 28/2009** sehingga analisis berikutnya akan menggunakan `df_final`.
+
+Namun sebagai bentuk analisis sementara, potongan proses berikut adalah tahapan filter data yang mencakup anomali di atas.
+
+```{python}
+df_testing = df_final
+
+# filter sanksi denda yang tidak tepat dengan 
+#   case 1: tanggal bayar - tanggal daftar > kelipatan tahun operasional DAN tanpa denda 
+case01 = df_testing[( (df_testing['Tgl Bayar'] - df_testing['Tgl Daftar']).dt.days > (365 * df_testing['Umur Operasional']) ) & (df_testing['Status Denda'] == "Ontime") ].index
+df_testing.drop(case01, inplace=True)
+
+#   case 2: tanggal bayar - tanggal daftar < kelipatan tahun operasional DAN kena denda 
+case02 = df_testing[( (df_testing['Tgl Bayar'] - df_testing['Tgl Daftar']).dt.days < (365 * df_testing['Umur Operasional']) ) & (df_testing['Status Denda'] == "Denda") ].index
+df_testing.drop(case02, inplace=True)
+
+show_data(df_testing)
 ```
 
 ## Exploratory Data Analysis
-
 
 ### Analisis Univariate
 
